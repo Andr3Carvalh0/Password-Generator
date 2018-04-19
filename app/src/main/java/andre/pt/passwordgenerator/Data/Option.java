@@ -1,27 +1,35 @@
 package andre.pt.passwordgenerator.Data;
 
-import android.graphics.drawable.Drawable;
-
 public class Option {
-    private final Drawable icon;
-    private final String title;
-    private final boolean active;
+    private final String id;
+    private final int icon;
+    private final int title;
+    private boolean active;
 
-    public Option(Drawable icon, String title, boolean active) {
+    public Option(String id, int icon, int title, boolean active) {
+        this.id = id;
         this.icon = icon;
         this.title = title;
         this.active = active;
     }
 
-    public Drawable getIcon() {
+    public String getId() {
+        return id;
+    }
+
+    public int getIcon() {
         return icon;
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return title;
     }
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

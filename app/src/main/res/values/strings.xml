@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Password Generator</string>
+    <string name="Uppercase">Uppercase letters</string>
+    <string name="Lowercase">Lowercase letters</string>
+    <string name="Numbers">Numbers</string>
 </resources>

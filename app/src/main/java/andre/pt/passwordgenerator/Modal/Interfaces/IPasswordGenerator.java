@@ -15,4 +15,6 @@ public interface IPasswordGenerator {
     void setDefaultLength();
 
     String generatePassword();
+
+    boolean canGeneratePassword();
 }

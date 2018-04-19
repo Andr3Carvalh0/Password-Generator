@@ -37,6 +37,11 @@ public class PasswordGenerator implements IPasswordGenerator {
         return result.toString();
     }
 
+    @Override
+    public boolean canGeneratePassword() {
+        return !(!useUppercase && !useLowercase && !useNumbers);
+    }
+
     private String prepareStringKeys(){
         String keys = "";
 

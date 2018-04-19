@@ -1,23 +1,29 @@
 package andre.pt.passwordgenerator.Views;
 
-import android.content.Context;
 import android.graphics.Point;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
+import java.util.List;
+import andre.pt.passwordgenerator.Adapters.OptionAdapter;
+import andre.pt.passwordgenerator.Data.Option;
+import andre.pt.passwordgenerator.Generator;
+import andre.pt.passwordgenerator.Presentes.Interfaces.IMainPresenter;
 import andre.pt.passwordgenerator.R;
 import andre.pt.passwordgenerator.Views.Interfaces.IMainView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements IMainView {
+public class MainActivity extends AppCompatActivity implements IMainView, CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.root) ConstraintLayout view;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
@@ -25,12 +31,14 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     private final static float WINDOW_ALPHA = 0.95f;
     private final static int WINDOW_GRAVITY = Gravity.TOP;
-    private final static float WINDOW_VERTICAL_MARGIN = 0.04f;
-    private final static float WINDOW_DIM = 0.10f;
+    private final static float WINDOW_VERTICAL_MARGIN = 0.05f;
+    private final static float WINDOW_DIM = 0.30f;
     private final static float WINDOW_PORTRAIT_WIDTH_OFFSET = .94f;
-    private final static float WINDOW_PORTRAIT_HEIGHT_OFFSET = .50f;
+    private final static float WINDOW_PORTRAIT_HEIGHT_OFFSET = .70f;
     private final static float WINDOW_LANDSCAPE_WIDTH_OFFSET = .70f;
     private final static float WINDOW_LANDSCAPE_HEIGHT_OFFSET = .80f;
+
+    private IMainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +46,20 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        presenter = ((Generator)getApplication()).getMainPresenter();
+        presenter.onCreate(this);
     }
 
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    @Override
+    public void prepareRecyclerView(List<Option> options){
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new OptionAdapter(options, this, this));
+    }
+
+    @Override
+    public void changeGenerateButtonState(boolean visibility) {
+        generateButton.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     private void configureFloatingWindow() {
@@ -54,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         params.gravity = WINDOW_GRAVITY;
         params.verticalMargin = WINDOW_VERTICAL_MARGIN;
         params.dimAmount = WINDOW_DIM;
+
         getWindow().setAttributes(params);
 
         final int[] dimens = getWindowsDimensions();
@@ -74,5 +92,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         ret[1] = size.y;
 
         return ret;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        final String id = (String) buttonView.getTag();
+        presenter.handleClick(id, isChecked);
     }
 }
