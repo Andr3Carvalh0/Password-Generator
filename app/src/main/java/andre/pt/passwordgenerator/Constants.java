@@ -12,4 +12,7 @@ public class Constants {
     public static final String NUMBERS_KEY = "NUMBERS_KEY";
     public static final String NOTIFICATION_KEY = "NUMBERS_KEY";
 
+    public static final String NOTIFICATION_CHANNEL = "General";
+    public static final String NOTIFICATION_CHANNEL_ID = "General_ID";
+
 }
