@@ -46,6 +46,8 @@ public class SettingsPresenter extends BasePresenter implements ISettingsPresent
         this.view = view;
         Option notification = getOptionWithID(NOTIFICATION_KEY);
 
+        hideNotification();
+
         if(notification.isActive())
             showNotification();
 

@@ -7,7 +7,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -20,13 +22,16 @@ import andre.pt.passwordgenerator.Utilities.INotificationManager;
 import andre.pt.passwordgenerator.Utilities.IPreferencesManager;
 import andre.pt.passwordgenerator.Views.Interfaces.IMainView;
 
+import static andre.pt.passwordgenerator.Constants.NOTIFICATION_KEY;
+
 public class Generator extends Application implements IPreferencesManager, INotificationManager {
     private IMainPresenter mainPresenter;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     public IMainPresenter getMainPresenter() {
@@ -38,16 +43,21 @@ public class Generator extends Application implements IPreferencesManager, INoti
 
     @Override
     public boolean pullValue(String key) {
-        return false;
+        return sharedPreferences.getBoolean(key, false);
     }
 
     @Override
     public void pushValues(Option... options) {
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
 
+        for (Option option : options)
+            edit.putBoolean(option.getId(), option.isActive());
+
+        edit.apply();
     }
 
     public ISettingsPresenter getSettingsPresenter() {
-        return new SettingsPresenter(false);
+        return new SettingsPresenter(pullValue(NOTIFICATION_KEY));
     }
 
     public INotificationManager getNotificationManager() {
