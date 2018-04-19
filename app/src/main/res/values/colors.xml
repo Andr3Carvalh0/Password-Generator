@@ -14,4 +14,6 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#ffffff</color>
+
+    <color name="card_title_background">#aa424242</color>
 </resources>

@@ -66,7 +66,9 @@ public class SettingsPresenter extends BasePresenter implements ISettingsPresent
 
     @Override
     public void onStop() {
-        view.savePreferences(getOptionWithID(NOTIFICATION_KEY));
+        if(view != null)
+            view.savePreferences(getOptionWithID(NOTIFICATION_KEY));
+
         view = null;
     }
 }

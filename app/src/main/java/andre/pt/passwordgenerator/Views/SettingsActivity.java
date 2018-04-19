@@ -13,18 +13,19 @@ import andre.pt.passwordgenerator.Data.Option;
 import andre.pt.passwordgenerator.Generator;
 import andre.pt.passwordgenerator.Presentes.Interfaces.ISettingsPresenter;
 import andre.pt.passwordgenerator.R;
-import andre.pt.passwordgenerator.Utilities.INotificationManager;
 import andre.pt.passwordgenerator.Utilities.IPreferencesManager;
+import andre.pt.passwordgenerator.Utilities.NotificationUtilities;
 import andre.pt.passwordgenerator.Views.Interfaces.ISettingsView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static andre.pt.passwordgenerator.Constants.NOTIFICATION_CHANNEL_ID;
 
 public class SettingsActivity extends AppCompatActivity implements ISettingsView, CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
     private ISettingsPresenter presenter;
-    private INotificationManager notificationManager;
     private IPreferencesManager preferencesManager;
 
     @Override
@@ -36,7 +37,6 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
         if(getSupportActionBar() != null)
             getSupportActionBar().setTitle(R.string.settings);
 
-        notificationManager = ((Generator)getApplication()).getNotificationManager();
         preferencesManager = ((Generator)getApplication()).getPreferencesManager();
 
         presenter = ((Generator)getApplication()).getSettingsPresenter();
@@ -51,8 +51,8 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         presenter.onStop();
     }
 
@@ -67,12 +67,25 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
         Intent it = new Intent(getApplicationContext(), MainActivity.class);
         it.setFlags(it.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-        notificationManager.show(id, getString(R.string.notificationTitle), getString(R.string.notificationBody), it);
+        try {
+            NotificationUtilities.notify(this, id)
+                                 .setChannelID(NOTIFICATION_CHANNEL_ID)
+                                 .setTitle(getString(R.string.notificationTitle))
+                                 .setDescription(getString(R.string.notificationBody))
+                                 .setOnNotificationClick(it)
+                                 .setIcon(R.drawable.ic_lock_outline)
+                                 .dismissOnTouch(false)
+                                 .dismissable(false)
+                                 .setChannelLowPriority()
+                                 .setChannelName("General")
+                                 .setNotificationLowPriority()
+                                 .show();
+        } catch (Exception e) { }
     }
 
     @Override
     public void hideNotification(int id) {
-        notificationManager.hide(id);
+        NotificationUtilities.dismiss(this, id);
     }
 
     @Override

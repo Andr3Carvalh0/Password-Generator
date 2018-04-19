@@ -3,22 +3,28 @@
     package="andre.pt.passwordgenerator">
 
     <application
-        android:allowBackup="false"
         android:name=".Generator"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".Views.MainActivity"
+        <activity
+            android:name=".Views.MainActivity"
+            android:excludeFromRecents="true"
             android:theme="@style/MainTheme"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.SettingsActivity"
+        <activity
+            android:name=".Views.SettingsActivity"
+            android:noHistory="true"
             android:theme="@style/SettingsTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,11 +1,15 @@
 package andre.pt.passwordgenerator.Views;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Point;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.List;
@@ -24,22 +29,26 @@ import andre.pt.passwordgenerator.Data.Option;
 import andre.pt.passwordgenerator.Generator;
 import andre.pt.passwordgenerator.Presentes.Interfaces.IMainPresenter;
 import andre.pt.passwordgenerator.R;
+import andre.pt.passwordgenerator.Utilities.AnimationUtilities;
+import andre.pt.passwordgenerator.Utilities.DisplayUtilities;
 import andre.pt.passwordgenerator.Views.Interfaces.IMainView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements IMainView, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements IMainView, CompoundButton.OnCheckedChangeListener {
 
+    @BindView(R.id.closeButton) ImageButton closeButton;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.generateButton) FloatingActionButton generateButton;
+    @BindView(R.id.alert) View alert;
 
-    private final static float WINDOW_ALPHA = 0.95f;
+    private final static float WINDOW_ALPHA = 1f;
     private final static int WINDOW_GRAVITY = Gravity.TOP;
     private final static float WINDOW_VERTICAL_MARGIN = 0.05f;
     private final static float WINDOW_DIM = 0.30f;
     private final static float WINDOW_PORTRAIT_WIDTH_OFFSET = .94f;
-    private final static float WINDOW_PORTRAIT_HEIGHT_OFFSET = .70f;
+    private final static float WINDOW_PORTRAIT_HEIGHT_OFFSET = .60f;
     private final static float WINDOW_LANDSCAPE_WIDTH_OFFSET = .70f;
     private final static float WINDOW_LANDSCAPE_HEIGHT_OFFSET = .80f;
 
@@ -70,39 +79,23 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
         if(currentVisibility == calculatedVisibility)
             return;
 
-        Animation animation;
+        final AnimationUtilities.Builder builder = AnimationUtilities.create()
+                    .setAnimationDuration(1000)
+                    .addOnAnimationEndEvent((anim) -> generateButton.setVisibility(calculatedVisibility));
 
-        if(calculatedVisibility == View.VISIBLE){
-            animation = new AlphaAnimation(0, 1);
-            animation.setInterpolator(new DecelerateInterpolator());
-        }else{
-            animation = new AlphaAnimation(1, 0);
-            animation.setInterpolator(new AccelerateInterpolator());
-        }
-        animation.setDuration(1000);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        if(calculatedVisibility == View.VISIBLE)
+            builder.setFadeInAnimation();
+        else
+            builder.setFadeOutAnimation();
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                generateButton.setVisibility(calculatedVisibility);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        generateButton.startAnimation(animation);
+        generateButton.startAnimation(builder.buildAnimation());
     }
 
     @Override
     public void acceptPassword(String password) {
-        Toast.makeText(this, password, Toast.LENGTH_SHORT).show();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("label", password);
+        clipboard.setPrimaryClip(clip);
     }
 
     private void configureFloatingWindow() {
@@ -117,24 +110,13 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
 
         getWindow().setAttributes(params);
 
-        final int[] dimens = getWindowsDimensions();
+        final int[] dimens = DisplayUtilities.getWindowsDimensions(this);
 
         if (dimens[1] > dimens[0]) {
             getWindow().setLayout((int) (dimens[0] * WINDOW_PORTRAIT_WIDTH_OFFSET), (int) (dimens[1] * WINDOW_PORTRAIT_HEIGHT_OFFSET));
         } else {
             getWindow().setLayout((int) (dimens[0] * WINDOW_LANDSCAPE_WIDTH_OFFSET), (int) (dimens[1] * WINDOW_LANDSCAPE_HEIGHT_OFFSET));
         }
-    }
-    private int[] getWindowsDimensions(){
-        int[] ret = new int[2];
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        ret[0] = size.x;
-        ret[1] = size.y;
-
-        return ret;
     }
 
     @Override
@@ -143,9 +125,13 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
         presenter.handleOnClick(id, isChecked);
     }
 
-    @Override
     @OnClick(R.id.generateButton)
-    public void onClick(View v) {
+    public void onClick() {
         presenter.generatePassword();
+    }
+
+    @OnClick(R.id.closeButton)
+    public void onClosedClicked(){
+        super.onBackPressed();
     }
 }
