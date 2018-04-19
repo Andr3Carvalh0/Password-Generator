@@ -1,7 +1,6 @@
 package andre.pt.passwordgenerator.Views;
 
 import android.graphics.Point;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements IMainView, CompoundButton.OnCheckedChangeListener {
 
-    @BindView(R.id.root) ConstraintLayout view;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.generateButton) FloatingActionButton generateButton;
 
@@ -97,6 +95,6 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         final String id = (String) buttonView.getTag();
-        presenter.handleClick(id, isChecked);
+        presenter.handleOnClick(id, isChecked);
     }
 }

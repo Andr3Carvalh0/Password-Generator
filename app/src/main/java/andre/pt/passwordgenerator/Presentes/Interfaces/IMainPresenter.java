@@ -5,7 +5,6 @@ import andre.pt.passwordgenerator.Views.Interfaces.IMainView;
 public interface IMainPresenter {
     void onCreate(IMainView view);
     void onPause();
-    void onResume();
-    void onStop();
-    void handleClick(String id, boolean active);
+    void onResume(IMainView view);
+    void handleOnClick(String id, boolean active);
 }

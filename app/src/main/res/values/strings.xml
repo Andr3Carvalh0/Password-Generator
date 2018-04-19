@@ -3,4 +3,8 @@
     <string name="Uppercase">Uppercase letters</string>
     <string name="Lowercase">Lowercase letters</string>
     <string name="Numbers">Numbers</string>
+    <string name="Notifications">Quick access via notification</string>
+    <string name="settings">Settings</string>
+    <string name="notificationBody">Tap to generate a new password.</string>
+    <string name="notificationTitle">Generate password</string>
 </resources>
