@@ -78,7 +78,7 @@ public class Generator extends Application implements IPreferencesManager, INoti
     @Override
     public void show(int id, String title, String body, Intent onClick) {
         NotificationCompat.Builder notification = createNotification(id, title, body, onClick);
-        
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             createChannel();
 

@@ -11,7 +11,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
+import android.widget.Toast;
+
 import java.util.List;
 import andre.pt.passwordgenerator.Adapters.OptionAdapter;
 import andre.pt.passwordgenerator.Data.Option;
@@ -21,8 +27,9 @@ import andre.pt.passwordgenerator.R;
 import andre.pt.passwordgenerator.Views.Interfaces.IMainView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements IMainView, CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements IMainView, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.generateButton) FloatingActionButton generateButton;
@@ -57,7 +64,45 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
 
     @Override
     public void changeGenerateButtonState(boolean visibility) {
-        generateButton.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        int currentVisibility = generateButton.getVisibility();
+        int calculatedVisibility = visibility ? View.VISIBLE : View.GONE;
+
+        if(currentVisibility == calculatedVisibility)
+            return;
+
+        Animation animation;
+
+        if(calculatedVisibility == View.VISIBLE){
+            animation = new AlphaAnimation(0, 1);
+            animation.setInterpolator(new DecelerateInterpolator());
+        }else{
+            animation = new AlphaAnimation(1, 0);
+            animation.setInterpolator(new AccelerateInterpolator());
+        }
+        animation.setDuration(1000);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                generateButton.setVisibility(calculatedVisibility);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        generateButton.startAnimation(animation);
+    }
+
+    @Override
+    public void acceptPassword(String password) {
+        Toast.makeText(this, password, Toast.LENGTH_SHORT).show();
     }
 
     private void configureFloatingWindow() {
@@ -96,5 +141,11 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         final String id = (String) buttonView.getTag();
         presenter.handleOnClick(id, isChecked);
+    }
+
+    @Override
+    @OnClick(R.id.generateButton)
+    public void onClick(View v) {
+        presenter.generatePassword();
     }
 }

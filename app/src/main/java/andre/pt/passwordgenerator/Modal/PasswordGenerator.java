@@ -1,5 +1,6 @@
 package andre.pt.passwordgenerator.Modal;
 
+import andre.pt.passwordgenerator.Constants;
 import andre.pt.passwordgenerator.Modal.Interfaces.IPasswordGenerator;
 
 import static andre.pt.passwordgenerator.Constants.DEFAULT_LENGHT;
@@ -15,13 +16,14 @@ public class PasswordGenerator implements IPasswordGenerator {
     private int length;
 
     public PasswordGenerator() {
-        this(true, true, true);
+        this(true, true, true, Constants.DEFAULT_LENGHT);
     }
 
-    public PasswordGenerator(boolean useUppercase, boolean useLowercase, boolean useNumbers) {
+    public PasswordGenerator(boolean useUppercase, boolean useLowercase, boolean useNumbers, int length) {
         this.useUppercase = useUppercase;
         this.useLowercase = useLowercase;
         this.useNumbers = useNumbers;
+        this.length = length;
     }
 
     @Override

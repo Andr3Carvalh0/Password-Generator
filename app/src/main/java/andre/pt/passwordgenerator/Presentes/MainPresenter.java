@@ -71,10 +71,17 @@ public class MainPresenter extends BasePresenter implements IMainPresenter {
         onCreate(view);
     }
 
-
     @Override
     public void handleOnClick(String id, boolean active) {
         if(super.handleClick(id, active) && view != null)
             view.changeGenerateButtonState(passwordGenerator.canGeneratePassword());
+    }
+
+    @Override
+    public void generatePassword() {
+        final String pass = passwordGenerator.generatePassword();
+
+        if(view != null)
+            view.acceptPassword(pass);
     }
 }

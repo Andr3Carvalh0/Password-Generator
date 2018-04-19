@@ -6,6 +6,6 @@ import andre.pt.passwordgenerator.Data.Option;
 
 public interface IMainView {
     void prepareRecyclerView(List<Option> options);
-
     void changeGenerateButtonState(boolean visibility);
+    void acceptPassword(String password);
 }

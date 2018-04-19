@@ -7,4 +7,5 @@ public interface IMainPresenter {
     void onPause();
     void onResume(IMainView view);
     void handleOnClick(String id, boolean active);
+    void generatePassword();
 }
