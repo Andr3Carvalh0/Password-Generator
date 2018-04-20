@@ -7,7 +7,7 @@ import andre.pt.passwordgenerator.Data.Option;
 import andre.pt.passwordgenerator.Presentes.Interfaces.BasePresenter;
 import andre.pt.passwordgenerator.Presentes.Interfaces.ISettingsPresenter;
 import andre.pt.passwordgenerator.R;
-import andre.pt.passwordgenerator.Views.Interfaces.ISettingsView;
+import andre.pt.passwordgenerator.Views.Fragments.Interfaces.ISettingsView;
 import static andre.pt.passwordgenerator.Constants.NOTIFICATION_KEY;
 
 public class SettingsPresenter extends BasePresenter implements ISettingsPresenter {

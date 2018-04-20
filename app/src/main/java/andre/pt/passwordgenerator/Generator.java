@@ -4,15 +4,15 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import andre.pt.passwordgenerator.Data.Option;
-import andre.pt.passwordgenerator.Presentes.Interfaces.IMainPresenter;
+import andre.pt.passwordgenerator.Presentes.Interfaces.IGeneratorPresenter;
 import andre.pt.passwordgenerator.Presentes.Interfaces.ISettingsPresenter;
-import andre.pt.passwordgenerator.Presentes.MainPresenter;
+import andre.pt.passwordgenerator.Presentes.GeneratorPresenter;
 import andre.pt.passwordgenerator.Presentes.SettingsPresenter;
 import andre.pt.passwordgenerator.Utilities.IPreferencesManager;
 import static andre.pt.passwordgenerator.Constants.NOTIFICATION_KEY;
 
 public class Generator extends Application implements IPreferencesManager {
-    private IMainPresenter mainPresenter;
+    private IGeneratorPresenter mainPresenter;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -21,9 +21,9 @@ public class Generator extends Application implements IPreferencesManager {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-    public IMainPresenter getMainPresenter() {
+    public IGeneratorPresenter getMainPresenter() {
         if(mainPresenter == null)
-            mainPresenter = new MainPresenter();
+            mainPresenter = new GeneratorPresenter();
 
         return mainPresenter;
     }

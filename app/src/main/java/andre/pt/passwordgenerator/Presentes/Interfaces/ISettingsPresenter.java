@@ -1,6 +1,6 @@
 package andre.pt.passwordgenerator.Presentes.Interfaces;
 
-import andre.pt.passwordgenerator.Views.Interfaces.ISettingsView;
+import andre.pt.passwordgenerator.Views.Fragments.Interfaces.ISettingsView;
 
 public interface ISettingsPresenter {
     void onCreate(ISettingsView view);

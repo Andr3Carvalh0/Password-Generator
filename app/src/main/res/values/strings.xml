@@ -8,4 +8,8 @@
     <string name="notificationBody">Tap to generate a new password.</string>
     <string name="notificationTitle">Generate password</string>
     <string name="copied">Copied</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="generate">Generate</string>
 </resources>

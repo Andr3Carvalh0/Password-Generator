@@ -42,7 +42,7 @@ public class AnimationUtilities {
 
         private View v;
         private List<Long> animationDuration = new LinkedList<>();
-        private List<ANIMATION_TYPES> animationType = new LinkedList();
+        private List<ANIMATION_TYPES> animationType = new LinkedList<>();
         private static final long DEFAULT_ANIMATION_DURATION = 500;
         private List<Consumer<Animation>> onAnimationStart = new LinkedList<>();
         private List<Consumer<Animation>> onAnimationEnd = new LinkedList<>();
@@ -50,10 +50,9 @@ public class AnimationUtilities {
         private List<Long> intervalBetweenAnimations = new LinkedList<>();
         private int index = 0;
 
-        public Builder(View v) {
+        Builder(View v) {
             this.v = v;
         }
-
 
         public Builder setAnimationDuration(long time){
             replaceOnIndex(animationDuration, index, time, () -> DEFAULT_ANIMATION_DURATION);

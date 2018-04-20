@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".Views.MainActivity"
+            android:name=".Views.Activities.GeneratorActivity"
             android:excludeFromRecents="true"
             android:theme="@style/MainTheme"
             android:windowSoftInputMode="stateHidden">
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Views.SettingsActivity"
+            android:name=".Views.Activities.MainActivity"
             android:noHistory="true"
             android:theme="@style/SettingsTheme">
             <intent-filter>

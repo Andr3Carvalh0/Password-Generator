@@ -40,7 +40,7 @@ public class NotificationUtilities {
         private int channelPriority = 3; //Default;
         private String channelName = "General";
 
-        public Builder(Context context, int id) {
+        Builder(Context context, int id) {
             this.context = context;
             this.id = id;
         }

@@ -7,18 +7,18 @@ import andre.pt.passwordgenerator.Data.Option;
 import andre.pt.passwordgenerator.Modal.Interfaces.IPasswordGenerator;
 import andre.pt.passwordgenerator.Modal.PasswordGenerator;
 import andre.pt.passwordgenerator.Presentes.Interfaces.BasePresenter;
-import andre.pt.passwordgenerator.Presentes.Interfaces.IMainPresenter;
+import andre.pt.passwordgenerator.Presentes.Interfaces.IGeneratorPresenter;
 import andre.pt.passwordgenerator.R;
-import andre.pt.passwordgenerator.Views.Interfaces.IMainView;
+import andre.pt.passwordgenerator.Views.Fragments.Interfaces.IGenerateView;
 import static andre.pt.passwordgenerator.Constants.LOWER_CASE_KEY;
 import static andre.pt.passwordgenerator.Constants.NUMBERS_KEY;
 import static andre.pt.passwordgenerator.Constants.UPPER_CASE_KEY;
 
-public class MainPresenter extends BasePresenter implements IMainPresenter {
-    private IMainView view;
+public class GeneratorPresenter extends BasePresenter implements IGeneratorPresenter {
+    private IGenerateView view;
     private IPasswordGenerator passwordGenerator;
 
-    public MainPresenter() {
+    public GeneratorPresenter() {
         passwordGenerator = new PasswordGenerator();
 
         optionList = new LinkedList<>();
@@ -54,7 +54,7 @@ public class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
-    public void onCreate(@NonNull IMainView view) {
+    public void onCreate(@NonNull IGenerateView view) {
         this.view = view;
 
         view.prepareRecyclerView(optionList);
@@ -67,7 +67,7 @@ public class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
-    public void onResume(@NonNull IMainView view) {
+    public void onResume(@NonNull IGenerateView view) {
         onCreate(view);
     }
 
