@@ -3,26 +3,17 @@ package andre.pt.passwordgenerator.Views;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.Point;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
 import java.util.List;
 import andre.pt.passwordgenerator.Adapters.OptionAdapter;
 import andre.pt.passwordgenerator.Data.Option;
@@ -79,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
         if(currentVisibility == calculatedVisibility)
             return;
 
-        final AnimationUtilities.Builder builder = AnimationUtilities.create()
+        final AnimationUtilities.Builder builder = AnimationUtilities.create(generateButton)
                     .setAnimationDuration(1000)
                     .addOnAnimationEndEvent((anim) -> generateButton.setVisibility(calculatedVisibility));
 
@@ -88,14 +79,29 @@ public class MainActivity extends AppCompatActivity implements IMainView, Compou
         else
             builder.setFadeOutAnimation();
 
-        generateButton.startAnimation(builder.buildAnimation());
+        builder.buildAnimation().start();
     }
 
     @Override
     public void acceptPassword(String password) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("label", password);
-        clipboard.setPrimaryClip(clip);
+        ClipData clip = ClipData.newPlainText(getString(R.string.app_name), password);
+
+        if(clipboard != null) {
+            clipboard.setPrimaryClip(clip);
+
+            AnimationUtilities.create(alert)
+                    .setAnimationDuration(1000)
+                    .setFadeInAnimation()
+                    .addOnAnimationStartEvent((anim) -> alert.setVisibility(View.VISIBLE))
+                    .setIntervalBetweenAnimations(500)
+                    .followedByAnimation()
+                    .setAnimationDuration(1000)
+                    .addOnAnimationEndEvent((anim) -> alert.setVisibility(View.GONE))
+                    .setFadeOutAnimation()
+                    .buildAnimation()
+                    .start();
+        }
     }
 
     private void configureFloatingWindow() {

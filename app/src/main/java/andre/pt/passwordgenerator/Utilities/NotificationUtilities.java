@@ -1,5 +1,6 @@
 package andre.pt.passwordgenerator.Utilities;
 
+import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,9 +10,6 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-
-import andre.pt.passwordgenerator.Constants;
-
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class NotificationUtilities {
@@ -108,32 +106,44 @@ public class NotificationUtilities {
         }
 
         public Builder setChannelLowPriority(){
-            channelPriority = 2;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                channelPriority = NotificationManager.IMPORTANCE_LOW;
+
             return this;
         }
 
         public Builder setChannelHighPriority(){
-            channelPriority = 4;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                channelPriority = NotificationManager.IMPORTANCE_HIGH;
+
             return this;
         }
 
         public Builder setChannelDefaultPriority(){
-            channelPriority = 3;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                channelPriority = NotificationManager.IMPORTANCE_DEFAULT;
+
             return this;
         }
 
         public Builder setChannelMinimumPriority(){
-            channelPriority = 1;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                channelPriority = NotificationManager.IMPORTANCE_MIN;
+
             return this;
         }
 
         public Builder setChannelMaximumPriority(){
-            channelPriority = 5;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                channelPriority = NotificationManager.IMPORTANCE_MAX;
+
             return this;
         }
 
         public Builder setChannelNonePriority(){
-            channelPriority = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                channelPriority = NotificationManager.IMPORTANCE_NONE;
+
             return this;
         }
 

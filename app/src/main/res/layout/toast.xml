@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    android:id="@+id/cardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="144dp"
-    android:layout_height="144dp">
+    android:layout_height="144dp"
+    android:layout_alignParentTop="true"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="6dp">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        app:cardBackgroundColor="@color/card_title_background"
-        app:cardCornerRadius="6dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_content_paste_white_24dp" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_content_paste_white_24dp" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView"
-                android:layout_centerHorizontal="true"
-                android:text="Copied"
-                android:textColor="@color/accent" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:text="@string/copied"
+            android:textColor="@color/accent" />
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
