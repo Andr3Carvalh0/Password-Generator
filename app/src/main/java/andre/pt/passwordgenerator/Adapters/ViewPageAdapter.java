@@ -9,18 +9,15 @@ import andre.pt.passwordgenerator.Views.Fragments.SettingsFragment;
 
 public class ViewPageAdapter extends FragmentStatePagerAdapter{
     private int count;
-    private static final Fragment fragments[] = {(Fragment) GenerateFragment.newInstance(), SettingsFragment.newInstance()};
-    private FragmentManager fm;
+    private static final Fragment fragments[] = {GenerateFragment.newInstance(), SettingsFragment.newInstance()};
 
     public ViewPageAdapter(FragmentManager fm) {
         super(fm);
         count = fragments.length;
-        this.fm = fm;
     }
 
     @Override
     public Fragment getItem(int position) {
-
         return fragments[position];
     }
 

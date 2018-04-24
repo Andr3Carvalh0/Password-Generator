@@ -28,7 +28,7 @@ public class GenerateFragment extends Fragment implements IGenerateView, Compoun
 
     private IGeneratorPresenter presenter;
 
-    public static IGenerateView newInstance() {
+    public static Fragment newInstance() {
         return new GenerateFragment();
     }
 
@@ -51,6 +51,9 @@ public class GenerateFragment extends Fragment implements IGenerateView, Compoun
 
         if(context instanceof IGeneratorActivity){
             presenter = ((IGeneratorActivity)context).getGenerator().getMainPresenter();
+        }else{
+            throw new RuntimeException("Cannot get activity!");
+
         }
     }
 

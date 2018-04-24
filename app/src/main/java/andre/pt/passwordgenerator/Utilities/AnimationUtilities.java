@@ -24,8 +24,13 @@ public class AnimationUtilities {
             Animation animation = new AlphaAnimation(1, 0);
             animation.setInterpolator(new AccelerateInterpolator());
             return animation;
-        });
+        }),
 
+        REVEAL(() -> {
+            Animation animation = new AlphaAnimation(1, 0);
+            animation.setInterpolator(new AccelerateInterpolator());
+            return animation;
+        });
 
         private Supplier<Animation> animation;
 

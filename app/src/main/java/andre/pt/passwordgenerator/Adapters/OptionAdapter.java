@@ -55,7 +55,7 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.OptionView
         @BindView(R.id.icon) ImageView icon;
         @BindView(R.id.state) SwitchCompat stateSwitch;
 
-        public OptionViewHolder(View itemView, CompoundButton.OnCheckedChangeListener onClick) {
+        OptionViewHolder(View itemView, CompoundButton.OnCheckedChangeListener onClick) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             stateSwitch.setOnCheckedChangeListener(onClick);

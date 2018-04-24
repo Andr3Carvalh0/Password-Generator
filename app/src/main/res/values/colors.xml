@@ -4,7 +4,6 @@
     <color name="primary_dark">#E12929</color>
     <color name="primary_darker">#cc1d1d</color>
     <color name="accent">#ffffff</color>
-
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>
@@ -14,6 +13,5 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#ffffff</color>
-
     <color name="card_title_background">#aa424242</color>
 </resources>

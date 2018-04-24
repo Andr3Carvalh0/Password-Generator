@@ -66,6 +66,9 @@ public class SettingsFragment extends Fragment implements ISettingsView, Compoun
         if(context instanceof ISettingsActivity){
             preferencesManager = ((ISettingsActivity)context).getGenerator().getPreferencesManager();
             presenter = ((ISettingsActivity)context).getGenerator().getSettingsPresenter();
+        }else{
+            throw new RuntimeException("Cannot get activity!");
+
         }
     }
 
